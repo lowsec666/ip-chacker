@@ -3,7 +3,10 @@ import requests
 
 TOKEN = 'YOUR_DISCORD_BOT_TOKEN'
 
-client = discord.Client()
+intents = discord.Intents.default()
+intents.message_content = True
+
+client = discord.Client(intents=intents)
 
 @client.event
 async def on_ready():
@@ -27,7 +30,7 @@ def get_ip_info(ip):
     
     ip_info = (
         f"IP: {data['query']}\n"
-        f"Type: {data['proxy']} ({data['mobile']})\n"
+        f"Type: {'IPv4' if ':' not in data['query'] else 'IPv6'}\n"
         f"Continent Code: {data['continentCode']}\n"
         f"Continent Name: {data['continent']}\n"
         f"Country Code: {data['countryCode']}\n"
